@@ -1,6 +1,8 @@
 package entities;
 
+import javax.swing.*;
 import java.util.Scanner;
+
 
 public class SistemaLogin {
     Scanner leitor = new Scanner(System.in);
@@ -12,28 +14,11 @@ public class SistemaLogin {
     public Integer contador = 3;
 
     // fornece uma interface para o usuario colocar login e senha
-    public void telaLogin() {
-        System.out.println("""
-                |--------------------------|
-                |      Tela de Login       |
-                |--------------------------| 
-                """);
+    public void telaLogin(String email, String senha) {
 
-        System.out.println("""
-                |--------------------------|
-                |          Login:          |
-                |--------------------------|        
-                        """);
 
-        input_email = leitor.nextLine();
-
-        System.out.println("""
-                |--------------------------|
-                |          Senha:          |
-                |--------------------------|
-                """);
-
-        input_senha = leitor.nextLine();
+        input_email = email;
+        input_senha = senha;
         logar();
     }
 
@@ -44,25 +29,16 @@ public class SistemaLogin {
         if (input_email.equals("admin") && input_senha.equals("123")) {
             telaAcessoLiberado();
 
-        } else {
-            if (contador.equals(0)) {
-                System.out.println("Acesso negado, finalizando programa");
-            } else {
-                System.out.println("Insira seu login novamente!" + String.format("(%d)",contador));
-                contador--;
-                telaLogin();
-            }
+        }else if (input_email.isBlank() || input_senha.isBlank()){
+            JOptionPane.showMessageDialog(null, "É necessário preencher todos os campos", "Campos", JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Email ou senha incorretos, tente novamente","Campos incorretos", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     //mensagem de acerto
     public void telaAcessoLiberado() {
-        System.out.println("""
-                |--------------------------|
-                |      Acesso liberado     |
-                |        Bem vindo!        |
-                |--------------------------|
-                """);
+        JOptionPane.showConfirmDialog(null, "Acesso liberado ! \n Seja bem vindo", "Olá novamente", JOptionPane.DEFAULT_OPTION);
     }
 }
 
